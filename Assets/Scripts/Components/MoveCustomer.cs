@@ -9,6 +9,7 @@ public class MoveCustomer : MonoBehaviour
     [SerializeField] private float maxSwimDuration = 5f;
 
     [SerializeField] private Transform jumpPoint;
+    [SerializeField] private Transform startPoint;
 
     private Tween currentMoveTween;
 
@@ -39,5 +40,14 @@ public class MoveCustomer : MonoBehaviour
             IsMoving = false;
             currentMoveTween = null;
         });
+    }
+
+    public void LeaveBeach()
+    {
+        currentMoveTween?.Kill();
+
+        Sequence leaveSequence = DOTween.Sequence();
+        leaveSequence.Append(transform.DOMove(jumpPoint.position, swimDuration));
+        leaveSequence.Append(transform.DOMove(startPoint.position, swimDuration));
     }
 }

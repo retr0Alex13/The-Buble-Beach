@@ -14,12 +14,14 @@ public class CustomerStatsController : MonoBehaviour
     [SerializeField] private float visitingTimeDecreaseRate = 0.1f;
 
     private CustomerBehaviour customerBehaviour;
+    private MoveCustomer moveCustomer;
     private CustomerColorChanger customerColorChanger;
 
     private void Awake()
     {
         customerBehaviour = GetComponent<CustomerBehaviour>();
         customerColorChanger = GetComponent<CustomerColorChanger>();
+        moveCustomer = GetComponent<MoveCustomer>();
     }
 
     private void Start()
@@ -53,7 +55,8 @@ public class CustomerStatsController : MonoBehaviour
             if (visitingTime <= 0)
             {
                 visitingTime = 0;
-                // Cutomer is leaving
+                moveCustomer.LeaveBeach();
+                IncreaseAir(maxAir);
                 return;
             }
             else
@@ -62,5 +65,14 @@ public class CustomerStatsController : MonoBehaviour
                 Debug.Log($"Час відвідування {gameObject.name}: {air}");
             }
         }
+    }
+
+    private void IncreaseAir(float amount)
+    {
+        air += amount;
+        if (air > maxAir)
+            air = maxAir;
+
+        customerColorChanger.UpdateColor(air, maxAir);
     }
 }
