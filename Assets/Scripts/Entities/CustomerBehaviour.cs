@@ -5,8 +5,8 @@ public class CustomerBehaviour : MonoBehaviour
     [SerializeField] private LayerMask waterLayer;
     [SerializeField] private BoxCollider2D SwimmingZone;
 
-    private float swimDelay = 2f;
-    private float maxSwimDelay = 5f;
+    [SerializeField] private float swimDelay = 2f;
+    [SerializeField] private float maxSwimDelay = 5f;
 
     private bool isSwimming;
 
@@ -35,14 +35,11 @@ public class CustomerBehaviour : MonoBehaviour
 
     private void Update()
     {
-        if (!isSwimming)
+        if (!isSwimming || moveCustomer.IsMoving)
             return;
 
-        if (!moveCustomer.IsMoving)
-        {
-            float randomDelay = Random.Range(swimDelay, maxSwimDelay);
-            Invoke(nameof(StartMoving), randomDelay);
-        }
+        float randomDelay = Random.Range(swimDelay, maxSwimDelay);
+        Invoke(nameof(StartMoving), randomDelay);
     }
     private void StartMoving()
     {

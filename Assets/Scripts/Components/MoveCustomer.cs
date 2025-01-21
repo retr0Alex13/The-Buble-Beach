@@ -5,7 +5,8 @@ public class MoveCustomer : MonoBehaviour
 {
     public bool IsMoving { get; private set; }
 
-    private float swimDuration = 4f; // Make it Random
+    [SerializeField] private float swimDuration = 3f;
+    [SerializeField] private float maxSwimDuration = 5f;
 
     private Tween currentMoveTween;
 
@@ -28,6 +29,8 @@ public class MoveCustomer : MonoBehaviour
 
         IsMoving = true;
         currentMoveTween?.Kill();
+
+        float randomSwimDuration = Random.Range(swimDuration, maxSwimDuration);
 
         currentMoveTween = transform.DOMove(position, swimDuration).SetEase(Ease.InOutSine).OnComplete(() =>
         {
