@@ -2,13 +2,13 @@ using UnityEngine;
 
 public class CustomerBehaviour : MonoBehaviour
 {
+    public bool IsInWater { get; private set; }
+
     [SerializeField] private LayerMask waterLayer;
     [SerializeField] private BoxCollider2D SwimmingZone;
 
     [SerializeField] private float swimDelay = 2f;
     [SerializeField] private float maxSwimDelay = 5f;
-
-    private bool isSwimming;
 
     private MoveCustomer moveCustomer;
 
@@ -16,7 +16,7 @@ public class CustomerBehaviour : MonoBehaviour
     {
         if (Utils.CompareLayers(waterLayer, collision.gameObject.layer))
         {
-            isSwimming = true;
+            IsInWater = true;
         }
     }
 
@@ -24,7 +24,7 @@ public class CustomerBehaviour : MonoBehaviour
     {
         if (Utils.CompareLayers(waterLayer, collision.gameObject.layer))
         {
-            isSwimming = false;
+            IsInWater = false;
         }
     }
 
@@ -35,7 +35,7 @@ public class CustomerBehaviour : MonoBehaviour
 
     private void Update()
     {
-        if (!isSwimming || moveCustomer.IsMoving)
+        if (!IsInWater || moveCustomer.IsMoving)
             return;
 
         float randomDelay = Random.Range(swimDelay, maxSwimDelay);
