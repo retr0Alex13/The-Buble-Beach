@@ -8,6 +8,8 @@ public class MoveCustomer : MonoBehaviour
     [SerializeField] private float swimDuration = 3f;
     [SerializeField] private float maxSwimDuration = 5f;
 
+    [SerializeField] private Transform jumpPoint;
+
     private Tween currentMoveTween;
 
     private void Start()
@@ -18,7 +20,7 @@ public class MoveCustomer : MonoBehaviour
     private void IntroSequence()
     {
         Sequence introSequence = DOTween.Sequence();
-        introSequence.Append(transform.DOMoveX(3.8f, swimDuration));
+        introSequence.Append(transform.DOMoveX(jumpPoint.position.x, swimDuration));
         introSequence.Append(transform.DOJump(new Vector3(-2.21f, -0.3f, 0f), 2, 1, 2));
     }
 
