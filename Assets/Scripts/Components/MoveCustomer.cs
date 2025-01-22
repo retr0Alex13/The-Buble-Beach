@@ -14,6 +14,16 @@ public class MoveCustomer : MonoBehaviour
 
     private Tween currentMoveTween;
 
+    private void Awake()
+    {
+        CustomerStayTime.OnCustomerLeave += LeaveBeach;
+    }
+
+    private void OnDestroy()
+    {
+        CustomerStayTime.OnCustomerLeave -= LeaveBeach;
+    }
+
     private void Start()
     {
         IntroSequence();
@@ -46,6 +56,7 @@ public class MoveCustomer : MonoBehaviour
 
         float randomSwimDuration = Random.Range(swimDuration, maxSwimDuration);
 
+        // Make it cleaned and readable
         currentMoveTween = transform.DOMove(position, randomSwimDuration)
             .SetEase(Ease.InOutSine)
             .OnComplete(() =>
