@@ -1,5 +1,3 @@
-using DG.Tweening;
-using System.Collections;
 using UnityEngine;
 
 public class CustomerBehaviour : MonoBehaviour
@@ -13,12 +11,14 @@ public class CustomerBehaviour : MonoBehaviour
 
     private BoxCollider2D swimmingZone;
     private MoveCustomer moveCustomer;
+    private float nextSwimTime;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (Utils.CompareLayers(waterLayer, collision.gameObject.layer))
         {
             IsInWater = true;
+            nextSwimTime = Time.time + Random.Range(swimDelay, maxSwimDelay);
         }
         if (collision.TryGetComponent(out SwimmingZone swimmingZoneComponent))
         {
@@ -46,18 +46,20 @@ public class CustomerBehaviour : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log($"Active Tweens: {DOTween.TotalPlayingTweens()}");
-
         if (!IsInWater || moveCustomer.IsMoving)
             return;
 
-        float randomDelay = Random.Range(swimDelay, maxSwimDelay);
-        Invoke(nameof(StartMoving), randomDelay);
-    }
-    private void StartMoving()
+        if (Time.time >= nextSwimTime)
         {
-            moveCustomer.MoveToPosition(GetRandomSwimPosition());
+            StartMoving();
+            nextSwimTime = Time.time + Random.Range(swimDelay, maxSwimDelay);
         }
+    }
+
+    private void StartMoving()
+    {
+        moveCustomer.MoveToPosition(GetRandomSwimPosition());
+    }
 
     private Vector2 GetRandomSwimPosition()
     {

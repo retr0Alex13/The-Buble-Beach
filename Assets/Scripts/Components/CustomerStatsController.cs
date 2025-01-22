@@ -1,4 +1,5 @@
 using UnityEngine;
+using DG.Tweening;
 
 public class CustomerStatsController : MonoBehaviour
 {
@@ -16,6 +17,8 @@ public class CustomerStatsController : MonoBehaviour
     private CustomerBehaviour customerBehaviour;
     private MoveCustomer moveCustomer;
     private CustomerColorChanger customerColorChanger;
+
+    private float previousAirPercentage = -1f; // Змінна для відстеження попереднього відсотка повітря
 
     private void Awake()
     {
@@ -37,33 +40,36 @@ public class CustomerStatsController : MonoBehaviour
 
     private void UpdateCustomerStats()
     {
-        if (customerBehaviour.IsInWater)
+        if (!customerBehaviour.IsInWater)
         {
-            if (air <= 0)
-            {
-                air = 0;
-                // Customer is dead
-                return;
-            }
-            else
-            {
-                air -= airDecreaseRate * Time.deltaTime;
-                customerColorChanger.UpdateColor(air, maxAir);
-                //Debug.Log($"Повітря відвідувача {gameObject.name}: {air}");
-            }
+            previousAirPercentage = -1f; // Скидаємо значення при виході з води
+            return;
+        }
 
-            if (visitingTime <= 0)
-            {
-                visitingTime = 0;
-                moveCustomer.LeaveBeach();
-                IncreaseAir(maxAir);
-                return;
-            }
-            else
-            {
-                visitingTime -= visitingTimeDecreaseRate * Time.deltaTime;
-                //Debug.Log($"Час відвідування {gameObject.name}: {visitingTime}");
-            }
+        if (air <= 0) // Перевірка на нуль або менше
+        {
+            air = 0;
+            // Customer is dead
+            return;
+        }
+
+        if (visitingTime <= 0)
+        {
+            visitingTime = 0;
+            moveCustomer.LeaveBeach();
+            IncreaseAir(maxAir);
+            return;
+        }
+
+        air -= airDecreaseRate * Time.deltaTime;
+        visitingTime -= visitingTimeDecreaseRate * Time.deltaTime;
+
+        float currentAirPercentage = air / maxAir;
+
+        if (Mathf.Abs(currentAirPercentage - previousAirPercentage) > 0.01f)
+        {
+            customerColorChanger.UpdateColor(air, maxAir);
+            previousAirPercentage = currentAirPercentage;
         }
     }
 
@@ -74,5 +80,6 @@ public class CustomerStatsController : MonoBehaviour
             air = maxAir;
 
         customerColorChanger.UpdateColor(air, maxAir);
+        previousAirPercentage = air / maxAir;
     }
 }
