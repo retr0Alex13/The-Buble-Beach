@@ -49,7 +49,7 @@ public class CustomerStatsController : MonoBehaviour
             {
                 air -= airDecreaseRate * Time.deltaTime;
                 customerColorChanger.UpdateColor(air, maxAir);
-                Debug.Log($"Повітря відвідувача {gameObject.name}: {air}");
+                //Debug.Log($"Повітря відвідувача {gameObject.name}: {air}");
             }
 
             if (visitingTime <= 0)
@@ -62,7 +62,7 @@ public class CustomerStatsController : MonoBehaviour
             else
             {
                 visitingTime -= visitingTimeDecreaseRate * Time.deltaTime;
-                Debug.Log($"Час відвідування {gameObject.name}: {air}");
+                //Debug.Log($"Час відвідування {gameObject.name}: {visitingTime}");
             }
         }
     }

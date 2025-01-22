@@ -1,5 +1,6 @@
 using DG.Tweening;
 using UnityEngine;
+using Zenject;
 
 public class MoveCustomer : MonoBehaviour
 {
@@ -8,8 +9,8 @@ public class MoveCustomer : MonoBehaviour
     [SerializeField] private float swimDuration = 3f;
     [SerializeField] private float maxSwimDuration = 5f;
 
-    [SerializeField] private Transform jumpPoint;
-    [SerializeField] private Transform startPoint;
+    [Inject(Id = "JumpPoint")] private Transform jumpPoint;
+    [Inject(Id = "StartPoint")] private Transform startPoint;
 
     private Tween currentMoveTween;
 
@@ -35,7 +36,7 @@ public class MoveCustomer : MonoBehaviour
 
         float randomSwimDuration = Random.Range(swimDuration, maxSwimDuration);
 
-        currentMoveTween = transform.DOMove(position, swimDuration).SetEase(Ease.InOutSine).OnComplete(() =>
+        currentMoveTween = transform.DOMove(position, randomSwimDuration).SetEase(Ease.InOutSine).OnComplete(() =>
         {
             IsMoving = false;
             currentMoveTween = null;
