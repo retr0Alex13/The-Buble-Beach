@@ -34,11 +34,6 @@ public class CustomerBehaviour : MonoBehaviour
         }
     }
 
-    private void HandleWaterCollision(Collider2D collision)
-    {
-        IsInWater = Utils.CompareLayers(waterLayer, collision.gameObject.layer) ? true : false;
-    }
-
     private void Awake()
     {
         moveCustomer = GetComponent<MoveCustomer>();

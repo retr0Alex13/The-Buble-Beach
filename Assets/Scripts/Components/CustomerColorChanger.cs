@@ -8,7 +8,7 @@ public class CustomerColorChanger : MonoBehaviour
     private Color originalColor;
 
     private SpriteRenderer spriteRenderer;
-    private Tween colorTween; // «бер≥гаЇмо посиланн€ на тв≥н
+    private Tween colorTween;
 
     private void Awake()
     {
@@ -21,7 +21,7 @@ public class CustomerColorChanger : MonoBehaviour
         float normalizedAir = air / maxAir;
         Color targetColor = Color.Lerp(originalColor, underWaterColor, 1 - normalizedAir);
 
-        colorTween?.Kill(); // ¬биваЇмо попередн≥й тв≥н, €кщо в≥н ≥снуЇ
+        colorTween?.Kill();
         colorTween = spriteRenderer.DOColor(targetColor, colorChangeDuration).SetEase(Ease.Linear);
     }
 }

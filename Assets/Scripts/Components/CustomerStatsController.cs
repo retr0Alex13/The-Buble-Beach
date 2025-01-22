@@ -18,7 +18,7 @@ public class CustomerStatsController : MonoBehaviour
     private MoveCustomer moveCustomer;
     private CustomerColorChanger customerColorChanger;
 
-    private float previousAirPercentage = -1f; // Змінна для відстеження попереднього відсотка повітря
+    private float previousAirPercentage = -1f;
 
     private void Awake()
     {
@@ -42,11 +42,16 @@ public class CustomerStatsController : MonoBehaviour
     {
         if (!customerBehaviour.IsInWater)
         {
-            previousAirPercentage = -1f; // Скидаємо значення при виході з води
+            previousAirPercentage = -1f;
             return;
         }
 
-        if (air <= 0) // Перевірка на нуль або менше
+        if (air == 0 || visitingTime == 0)
+        {
+            return;
+        }
+
+        if (air <= 0)
         {
             air = 0;
             // Customer is dead
@@ -56,6 +61,7 @@ public class CustomerStatsController : MonoBehaviour
         if (visitingTime <= 0)
         {
             visitingTime = 0;
+            // Transfer this logic to another place
             moveCustomer.LeaveBeach();
             IncreaseAir(maxAir);
             return;
