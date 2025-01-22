@@ -1,5 +1,7 @@
+using System;
 using UnityEngine;
-using DG.Tweening;
+using Random = UnityEngine.Random;
+
 
 public class CustomerStatsController : MonoBehaviour
 {
@@ -14,7 +16,7 @@ public class CustomerStatsController : MonoBehaviour
     [SerializeField] private float maxVisitingTime = 200f;
     [SerializeField] private float visitingTimeDecreaseRate = 0.1f;
 
-    private CustomerBehaviour customerBehaviour;
+    private CustomerSwimming customerBehaviour;
     private MoveCustomer moveCustomer;
     private CustomerColorChanger customerColorChanger;
 
@@ -22,7 +24,7 @@ public class CustomerStatsController : MonoBehaviour
 
     private void Awake()
     {
-        customerBehaviour = GetComponent<CustomerBehaviour>();
+        customerBehaviour = GetComponent<CustomerSwimming>();
         customerColorChanger = GetComponent<CustomerColorChanger>();
         moveCustomer = GetComponent<MoveCustomer>();
     }

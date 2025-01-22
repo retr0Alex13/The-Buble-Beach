@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class CustomerBehaviour : MonoBehaviour
+public class CustomerSwimming : MonoBehaviour
 {
     public bool IsInWater { get; private set; }
 
