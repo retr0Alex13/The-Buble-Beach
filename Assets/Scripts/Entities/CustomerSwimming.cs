@@ -10,7 +10,9 @@ public class CustomerSwimming : MonoBehaviour
     [SerializeField] private float maxSwimDelay = 5f;
 
     private BoxCollider2D swimmingZone;
+
     private MoveCustomer moveCustomer;
+
     private float nextSwimTime;
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -41,6 +43,8 @@ public class CustomerSwimming : MonoBehaviour
 
     private void Update()
     {
+        // If is drowned, return
+
         if (!IsInWater || moveCustomer.IsMoving)
             return;
 
