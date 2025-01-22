@@ -130,7 +130,7 @@ GameObject:
   - component: {fileID: 332840688}
   - component: {fileID: 332840689}
   m_Layer: 0
-  m_Name: Customer Manager
+  m_Name: Spawn Manager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
