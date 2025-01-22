@@ -211,11 +211,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   air: 0
   maxAir: 100
-  airDecreaseRate: 5
+  airDecreaseRate: 4
   visitingTime: 0
   minVisitingTime: 50
   maxVisitingTime: 100
-  visitingTimeDecreaseRate: 2
+  visitingTimeDecreaseRate: 5
 --- !u!114 &3467747466054321208
 MonoBehaviour:
   m_ObjectHideFlags: 0
