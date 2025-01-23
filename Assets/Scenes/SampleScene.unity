@@ -198,6 +198,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnPoint: {fileID: 1565058189}
+  spawnInterval: 5
+  maxSpawnInterval: 10
+  maxCustomers: 5
 --- !u!114 &332840690
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -775,12 +778,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 889422259}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 2.53, z: 0}
   m_LocalScale: {x: 25.38, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1540489504}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &889422261
 BoxCollider2D:
@@ -915,6 +918,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1222684789
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1222684790}
+  m_Layer: 0
+  m_Name: Drown Line
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1222684790
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1222684789}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.02, y: -7.0481505, z: 0.00011529075}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1540489504}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1358125525
 GameObject:
   m_ObjectHideFlags: 0
@@ -947,6 +981,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   jumpPoint: {fileID: 1648145287}
   startPoint: {fileID: 1565058189}
+  drownLine: {fileID: 1222684790}
   customerPrefab: {fileID: 2910941462768736620, guid: ed1430d24cec2554db958650e40d3d59, type: 3}
   emergePoint: {fileID: 1786881050}
   bubblePrefab: {fileID: 5363164391984508423, guid: da8756becf89afe4981a3e66ee158855, type: 3}
@@ -1115,6 +1150,8 @@ Transform:
   m_Children:
   - {fileID: 815455382}
   - {fileID: 264312269}
+  - {fileID: 889422260}
+  - {fileID: 1222684790}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1565058188
@@ -1311,4 +1348,3 @@ SceneRoots:
   - {fileID: 1171188482}
   - {fileID: 332840688}
   - {fileID: 1358125528}
-  - {fileID: 889422260}

@@ -212,7 +212,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   air: 0
   maxAir: 100
-  airDecreaseRate: 5
+  airDecreaseRate: 7
 --- !u!114 &1202288613129913450
 MonoBehaviour:
   m_ObjectHideFlags: 0
