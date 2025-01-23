@@ -6,6 +6,7 @@ using Random = UnityEngine.Random;
 public class CustomerStayTime : MonoBehaviour
 {
     public event Action OnCustomerLeave;
+    public float VisitingTime => visitingTime;
 
     [SerializeField] private float visitingTime;
     [SerializeField] private float minVisitingTime = 100f;
@@ -31,13 +32,8 @@ public class CustomerStayTime : MonoBehaviour
 
     private void DecreaseStayDuration()
     {
-        if (customerAir.IsDrowned)
+        if (customerAir.IsDrowned || visitingTime == 0)
             return;
-
-        if (visitingTime == 0)
-        {
-            return;
-        }
 
         if (visitingTime <= 0)
         {

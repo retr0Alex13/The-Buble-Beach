@@ -36,7 +36,7 @@ public class CustomerAir : MonoBehaviour
 
     private void Update()
     {
-        if (IsDrowned)
+        if (IsDrowned || stayTimeComponent.VisitingTime == 0)
             return;
 
         if (!swimmingComponent.IsInWater)
