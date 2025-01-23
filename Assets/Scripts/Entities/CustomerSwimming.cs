@@ -18,19 +18,21 @@ public class CustomerSwimming : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (collision.TryGetComponent(out SwimmingZone swimmingZoneComponent))
+        {
+            swimmingZone = swimmingZoneComponent.GetComponent<BoxCollider2D>();
+        }
         if (Utils.CompareLayers(waterLayer, collision.gameObject.layer))
         {
             IsInWater = true;
             nextSwimTime = Time.time + Random.Range(swimDelay, maxSwimDelay);
         }
-        if (collision.TryGetComponent(out SwimmingZone swimmingZoneComponent))
-        {
-            swimmingZone = collision.GetComponent<BoxCollider2D>();
-        }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
+        // NOTE: In project setting I have set customer
+        // and destroy bubble line layers to ignore each other collision
         if (!Utils.CompareLayers(waterLayer, collision.gameObject.layer))
         {
             IsInWater = false;
