@@ -12,6 +12,7 @@ public class CustomerSwimming : MonoBehaviour
     private BoxCollider2D swimmingZone;
 
     private MoveCustomer moveCustomer;
+    private CustomerAir customersAir;
 
     private float nextSwimTime;
 
@@ -39,11 +40,18 @@ public class CustomerSwimming : MonoBehaviour
     private void Awake()
     {
         moveCustomer = GetComponent<MoveCustomer>();
+        customersAir = GetComponent<CustomerAir>();
     }
 
     private void Update()
     {
-        // If is drowned, return
+        HandleSwimming();
+    }
+
+    private void HandleSwimming()
+    {
+        if (customersAir.IsDrowned)
+            return;
 
         if (!IsInWater || moveCustomer.IsMoving)
             return;

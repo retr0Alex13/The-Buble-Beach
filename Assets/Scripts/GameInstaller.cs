@@ -10,6 +10,11 @@ public class GameInstaller : MonoInstaller
 
     public override void InstallBindings()
     {
+        BindCustomerPrefab();
+    }
+
+    private void BindCustomerPrefab()
+    {
         Container.Bind<Transform>().WithId("JumpPoint").FromInstance(jumpPoint);
         Container.Bind<Transform>().WithId("StartPoint").FromInstance(startPoint);
 
