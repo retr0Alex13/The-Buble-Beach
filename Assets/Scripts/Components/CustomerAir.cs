@@ -14,12 +14,14 @@ public class CustomerAir : MonoBehaviour
     private CustomerSwimming swimmingComponent;
     private CustomerColorChanger colorChangerComponent;
     private CustomerStayTime stayTimeComponent;
+    private MoveCustomer moveCustomer;
 
     private void Awake()
     {
         swimmingComponent = GetComponent<CustomerSwimming>();
         colorChangerComponent = GetComponent<CustomerColorChanger>();
         stayTimeComponent = GetComponent<CustomerStayTime>();
+        moveCustomer = GetComponent<MoveCustomer>();
 
         stayTimeComponent.OnCustomerLeave += RefillAir;
     }
@@ -53,6 +55,7 @@ public class CustomerAir : MonoBehaviour
             air = 0;
             // Customer drowned logic
             IsDrowned = true;
+            moveCustomer.Drown();
             Debug.Log("Customer drowned");
             return;
         }
