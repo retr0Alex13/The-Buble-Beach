@@ -25,6 +25,13 @@ public class Bubble : MonoBehaviour
     private void OnMouseDrag()
     {
         StopEmergeSequence();
+        DragBubble();
+    }
+
+    private void DragBubble()
+    {
+        Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        transform.position = mousePosition;
     }
 
     private void OnMouseUp()
@@ -41,7 +48,8 @@ public class Bubble : MonoBehaviour
     {
         emergeSequence = DOTween.Sequence()
                     .Append(transform.DOMoveY(emergePoint.position.y, speed))
-                    .SetEase(Ease.InOutSine);
+                    .SetSpeedBased(true)
+                    .SetEase(Ease.OutSine);
     }
 
     private void StopEmergeSequence()
@@ -52,11 +60,25 @@ public class Bubble : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        // Play sound/animation here
         if (Utils.CompareLayers(waterLineLayer, collision.gameObject.layer))
         {
             StopEmergeSequence();
             Destroy(gameObject);
         }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.TryGetComponent(out CustomerAir customerAir))
+        {
+            customerAir.IncreaseAir(airAmount);
+            Destroy(gameObject);
+        }
+    }
+
+    private void OnDestroy()
+    {
+        // Play sound/animation here
+        StopEmergeSequence();
     }
 }
