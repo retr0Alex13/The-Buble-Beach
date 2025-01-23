@@ -5,12 +5,22 @@ public class GameInstaller : MonoInstaller
 {
     [SerializeField] private Transform jumpPoint;
     [SerializeField] private Transform startPoint;
-
     [SerializeField] private GameObject customerPrefab;
+
+    [SerializeField] private Transform emergePoint;
+    [SerializeField] private GameObject bubblePrefab;
 
     public override void InstallBindings()
     {
         BindCustomerPrefab();
+        BindBubblePrefab();
+    }
+
+    private void BindBubblePrefab()
+    {
+        Container.Bind<Transform>().WithId("EmergePoint").FromInstance(emergePoint);
+        Container.Bind<Bubble>().FromComponentInNewPrefab(bubblePrefab).AsSingle();
+        Container.Bind<GameObject>().WithId("BubblePrefab").FromInstance(bubblePrefab);
     }
 
     private void BindCustomerPrefab()
@@ -19,7 +29,6 @@ public class GameInstaller : MonoInstaller
         Container.Bind<Transform>().WithId("StartPoint").FromInstance(startPoint);
 
         Container.Bind<MoveCustomer>().FromComponentInNewPrefab(customerPrefab).AsTransient();
-
         Container.Bind<GameObject>().WithId("CustomerPrefab").FromInstance(customerPrefab);
     }
 }
