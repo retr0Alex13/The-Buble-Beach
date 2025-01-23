@@ -210,6 +210,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55657ea8e9643844684010dda21cc019, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  air: 0
+  maxAir: 100
+  airDecreaseRate: 5
 --- !u!114 &1202288613129913450
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -222,13 +225,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8190db5cff8110459c803333f5f2c37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  air: 0
-  maxAir: 100
-  airDecreaseRate: 4
   visitingTime: 0
   minVisitingTime: 50
   maxVisitingTime: 100
-  visitingTimeDecreaseRate: 5
+  visitingTimeDecreaseRate: 1
 --- !u!114 &3467747466054321208
 MonoBehaviour:
   m_ObjectHideFlags: 0
