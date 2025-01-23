@@ -9,6 +9,9 @@ public class MoveCustomer : MonoBehaviour
 
     [Inject(Id = "JumpPoint")] private Transform jumpPoint;
     [Inject(Id = "StartPoint")] private Transform startPoint;
+    [Inject(Id = "DrownLine")] private Transform drownLine;
+
+    private CustomerSpawnManager customerManager;
 
     public bool IsMoving => isMoving;
     private bool isMoving;
@@ -30,6 +33,7 @@ public class MoveCustomer : MonoBehaviour
 
     private void Start()
     {
+        customerManager = FindAnyObjectByType<CustomerSpawnManager>();
         IntroSequence();
     }
 
@@ -55,8 +59,7 @@ public class MoveCustomer : MonoBehaviour
 
         isMoving = true;
 
-        currentMoveTween?.Kill();
-        currentMoveTween = null;
+        CancelCurrentTween();
 
         float moveDuration = Random.Range(swimDuration, maxSwimDuration);
 
@@ -64,6 +67,12 @@ public class MoveCustomer : MonoBehaviour
             .SetEase(Ease.InOutSine)
             .OnComplete(OnMoveComplete)
             .OnKill(OnMoveComplete);
+    }
+
+    private void CancelCurrentTween()
+    {
+        currentMoveTween?.Kill();
+        currentMoveTween = null;
     }
 
     private void OnMoveComplete()
@@ -74,13 +83,27 @@ public class MoveCustomer : MonoBehaviour
 
     public void LeaveBeach()
     {
-        currentMoveTween?.Kill();
-        currentMoveTween = null;
+        CancelCurrentTween();
         transform.DOKill();
 
         DOTween.Sequence()
             .Append(transform.DOMove(jumpPoint.position, swimDuration))
             .Append(transform.DOMove(startPoint.position, maxSwimDuration))
-            .SetSpeedBased(true);
+            .SetSpeedBased(true)
+            .OnKill(() =>
+            {
+                customerManager.CustomerLeft(gameObject);
+            });
+    }
+
+    public void Drown()
+    {
+        CancelCurrentTween();
+        transform.DOMoveY(drownLine.position.y, swimDuration)
+            .SetEase(Ease.InBack)
+            .OnComplete(() =>
+            {
+                customerManager.CustomerLeft(gameObject);
+            });
     }
 }
