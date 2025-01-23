@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class CustomerAir : MonoBehaviour
 {
+    public bool IsDrowned { get; set; }
+
     [SerializeField] private float air;
     [SerializeField] private float maxAir = 100f;
     [SerializeField] private float airDecreaseRate = 0.1f;
@@ -11,18 +13,20 @@ public class CustomerAir : MonoBehaviour
 
     private CustomerSwimming swimmingComponent;
     private CustomerColorChanger colorChangerComponent;
+    private CustomerStayTime stayTimeComponent;
 
     private void Awake()
     {
         swimmingComponent = GetComponent<CustomerSwimming>();
         colorChangerComponent = GetComponent<CustomerColorChanger>();
+        stayTimeComponent = GetComponent<CustomerStayTime>();
 
-        CustomerStayTime.OnCustomerLeave += RefillAir;
+        stayTimeComponent.OnCustomerLeave += RefillAir;
     }
 
     private void OnDestroy()
     {
-        CustomerStayTime.OnCustomerLeave -= RefillAir;
+        stayTimeComponent.OnCustomerLeave -= RefillAir;
     }
 
     private void Start()
@@ -32,7 +36,8 @@ public class CustomerAir : MonoBehaviour
 
     private void Update()
     {
-        // If drowned, return
+        if (IsDrowned)
+            return;
 
         if (!swimmingComponent.IsInWater)
         {
@@ -47,6 +52,7 @@ public class CustomerAir : MonoBehaviour
         {
             air = 0;
             // Customer drowned logic
+            IsDrowned = true;
             Debug.Log("Customer drowned");
             return;
         }

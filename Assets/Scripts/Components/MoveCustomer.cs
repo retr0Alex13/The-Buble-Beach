@@ -4,24 +4,28 @@ using Zenject;
 
 public class MoveCustomer : MonoBehaviour
 {
-    public bool IsMoving { get; private set; }
-
     [SerializeField] private float swimDuration = 3f;
     [SerializeField] private float maxSwimDuration = 5f;
 
     [Inject(Id = "JumpPoint")] private Transform jumpPoint;
     [Inject(Id = "StartPoint")] private Transform startPoint;
 
+    public bool IsMoving => isMoving;
+    private bool isMoving;
+
+    private CustomerStayTime customerTime;
+
     private Tween currentMoveTween;
 
     private void Awake()
     {
-        CustomerStayTime.OnCustomerLeave += LeaveBeach;
+        customerTime = GetComponent<CustomerStayTime>();
+        customerTime.OnCustomerLeave += LeaveBeach;
     }
 
     private void OnDestroy()
     {
-        CustomerStayTime.OnCustomerLeave -= LeaveBeach;
+        customerTime.OnCustomerLeave -= LeaveBeach;
     }
 
     private void Start()
@@ -44,30 +48,28 @@ public class MoveCustomer : MonoBehaviour
 
     public void MoveToPosition(Vector2 position)
     {
-        if (IsMoving)
+        if (isMoving)
         {
             return;
         }
 
-        IsMoving = true;
+        isMoving = true;
 
         currentMoveTween?.Kill();
         currentMoveTween = null;
 
-        float randomSwimDuration = Random.Range(swimDuration, maxSwimDuration);
+        float moveDuration = Random.Range(swimDuration, maxSwimDuration);
 
-        // Make it cleaned and readable
-        currentMoveTween = transform.DOMove(position, randomSwimDuration)
+        currentMoveTween = transform.DOMove(position, moveDuration)
             .SetEase(Ease.InOutSine)
-            .OnComplete(() =>
-        {
-            IsMoving = false;
-            currentMoveTween = null;
-        }).OnKill(() =>
-        {
-            IsMoving = false;
-            currentMoveTween = null;
-        });
+            .OnComplete(OnMoveComplete)
+            .OnKill(OnMoveComplete);
+    }
+
+    private void OnMoveComplete()
+    {
+        isMoving = false;
+        currentMoveTween = null;
     }
 
     public void LeaveBeach()
