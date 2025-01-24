@@ -1,13 +1,18 @@
 using DG.Tweening;
+using System;
 using UnityEngine;
 using Zenject;
 
 public class Bubble : MonoBehaviour
 {
+    public float LifeTime => lifeTime;
+    public event Action<GameObject> OnBubblePopped;
+
     [SerializeField] private float airAmount = 30f;
     [SerializeField] private float scale = 0.7f;
     [SerializeField] private float scaleDuration = 0.5f;
     [SerializeField] private float speed = 2f;
+    [SerializeField] private float lifeTime = 10f;
 
     [SerializeField] private LayerMask waterLineLayer;
 
@@ -63,7 +68,7 @@ public class Bubble : MonoBehaviour
         if (Utils.CompareLayers(waterLineLayer, collision.gameObject.layer))
         {
             StopEmergeSequence();
-            Destroy(gameObject);
+            PopTheBubble();
         }
     }
 
@@ -72,13 +77,21 @@ public class Bubble : MonoBehaviour
         if (collision.gameObject.TryGetComponent(out CustomerAir customerAir))
         {
             customerAir.IncreaseAir(airAmount);
-            Destroy(gameObject);
+            PopTheBubble();
         }
     }
 
-    private void OnDestroy()
+    public void PopTheBubble()
     {
-        // Play sound/animation here
+        OnBubblePopped?.Invoke(gameObject);
         StopEmergeSequence();
+        Destroy(gameObject);
     }
+
+    //private void OnDestroy()
+    //{
+    //    // Play sound/animation here
+    //    OnBubblePopped?.Invoke(gameObject);
+    //    StopEmergeSequence();
+    //}
 }
