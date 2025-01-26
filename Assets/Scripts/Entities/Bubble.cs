@@ -46,7 +46,12 @@ public class Bubble : MonoBehaviour
 
     void Update()
     {
+        lifeTime -= Time.deltaTime;
 
+        if (lifeTime <= 0)
+        {
+            PopTheBubble();
+        }
     }
 
     private void StartEmergeSequence()
@@ -87,11 +92,4 @@ public class Bubble : MonoBehaviour
         StopEmergeSequence();
         Destroy(gameObject);
     }
-
-    //private void OnDestroy()
-    //{
-    //    // Play sound/animation here
-    //    OnBubblePopped?.Invoke(gameObject);
-    //    StopEmergeSequence();
-    //}
 }

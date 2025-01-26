@@ -56,7 +56,7 @@ public class CustomerAir : MonoBehaviour
             // Customer drowned logic
             IsDrowned = true;
             moveCustomer.Drown();
-            Debug.Log("Customer drowned");
+            //Debug.Log("Customer drowned");
             return;
         }
 

@@ -14,6 +14,7 @@ public class CustomerStayTime : MonoBehaviour
     [SerializeField] private float visitingTimeDecreaseRate = 4f;
 
     private CustomerAir customerAir;
+    private bool hasLeft;
 
     private void Awake()
     {
@@ -32,16 +33,21 @@ public class CustomerStayTime : MonoBehaviour
 
     private void DecreaseStayDuration()
     {
-        if (customerAir.IsDrowned || visitingTime == 0)
+
+        if (customerAir.IsDrowned)
             return;
 
-        if (visitingTime <= 0)
+        if (visitingTime <= 0 && !hasLeft)
         {
             visitingTime = 0;
             OnCustomerLeave?.Invoke();
+            hasLeft = true;
             return;
         }
 
-        visitingTime -= visitingTimeDecreaseRate * Time.deltaTime;
+        if (visitingTime > 0)
+        {
+            visitingTime -= visitingTimeDecreaseRate * Time.deltaTime;
+        }
     }
 }

@@ -40,7 +40,10 @@ public class CustomerSpawnManager : MonoBehaviour
 
     public void CustomerLeft(GameObject customer)
     {
-        currentCustomersCount--;
-        Destroy(customer);
+        if (customer != null)
+        {
+            currentCustomersCount--;
+            //Destroy(customer);
+        }
     }
 }

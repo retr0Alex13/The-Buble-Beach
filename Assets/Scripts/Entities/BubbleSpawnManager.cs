@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using Zenject;
 
@@ -10,7 +9,6 @@ public class BubbleSpawnManager : MonoBehaviour
     [SerializeField] private int bubblesToCustomerRatio = 2;
 
     [SerializeField] private float spawnDelay = 0.3f;
-    [SerializeField] private float spawnRate = 10f;
 
     [Inject(Id = "BubblePrefab")] private GameObject bubblePrefab;
     [Inject] DiContainer container;
@@ -18,12 +16,16 @@ public class BubbleSpawnManager : MonoBehaviour
     [SerializeField] private Transform spawnPoint;
     [SerializeField] private Transform bubblesParent;
 
+    [SerializeField] private AudioClip[] bubblePopSounds;
+    private AudioSource audioSource;
+
     private List<GameObject> activeBubbles = new List<GameObject>();
     private CustomerSpawnManager customerManager;
 
     private void Awake()
     {
         customerManager = GetComponent<CustomerSpawnManager>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     private void Update()
@@ -62,6 +64,11 @@ public class BubbleSpawnManager : MonoBehaviour
     {
         if (activeBubbles.Contains(bubble))
         {
+            if (!audioSource.isPlaying)
+            {
+                int randomIndex = Random.Range(0, bubblePopSounds.Length);
+                audioSource.PlayOneShot(bubblePopSounds[randomIndex]);
+            }
             activeBubbles.Remove(bubble);
         }
     }

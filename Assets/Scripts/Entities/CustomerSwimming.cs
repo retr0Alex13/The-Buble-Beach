@@ -10,21 +10,27 @@ public class CustomerSwimming : MonoBehaviour
     [SerializeField] private float maxSwimDelay = 5f;
 
     private BoxCollider2D swimmingZone;
+    private AudioSource audioSource;
+    private Animator animator;
 
     private MoveCustomer moveCustomer;
     private CustomerAir customersAir;
+
+    private bool IsJumped;
 
     private float nextSwimTime;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.TryGetComponent(out SwimmingZone swimmingZoneComponent))
-        {
-            swimmingZone = swimmingZoneComponent.GetComponent<BoxCollider2D>();
-        }
         if (Utils.CompareLayers(waterLayer, collision.gameObject.layer))
         {
+            if (!IsJumped)
+            {
+                audioSource.Play();
+                IsJumped = true;
+            }
             IsInWater = true;
+            animator.SetBool("Swim", true);
             nextSwimTime = Time.time + Random.Range(swimDelay, maxSwimDelay);
         }
     }
@@ -36,6 +42,7 @@ public class CustomerSwimming : MonoBehaviour
         if (!Utils.CompareLayers(waterLayer, collision.gameObject.layer))
         {
             IsInWater = false;
+            animator.SetBool("Swim", false);
         }
     }
 
@@ -43,6 +50,10 @@ public class CustomerSwimming : MonoBehaviour
     {
         moveCustomer = GetComponent<MoveCustomer>();
         customersAir = GetComponent<CustomerAir>();
+        animator = GetComponent<Animator>();
+        audioSource = GetComponent<AudioSource>();
+
+        swimmingZone = FindAnyObjectByType<SwimmingZone>().GetComponent<BoxCollider2D>();
     }
 
     private void Update()

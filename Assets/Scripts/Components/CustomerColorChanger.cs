@@ -5,15 +5,15 @@ public class CustomerColorChanger : MonoBehaviour
 {
     [SerializeField] private float colorChangeDuration = 0.5f;
     [SerializeField] private Color underWaterColor;
-    private Color originalColor;
+    [SerializeField] private Color originalColor;
 
-    private SpriteRenderer spriteRenderer;
+    [SerializeField] private SpriteRenderer spriteRenderer;
     private Tween colorTween;
 
     private void Awake()
     {
-        spriteRenderer = GetComponent<SpriteRenderer>();
-        originalColor = spriteRenderer.color;
+        //originalColor = spriteRenderer.color;
+        spriteRenderer.color = originalColor;
     }
 
     public void UpdateColor(float air, float maxAir)

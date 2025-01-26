@@ -4,6 +4,7 @@ using Zenject;
 public class GameInstaller : MonoInstaller
 {
     [SerializeField] private Transform jumpPoint;
+    [SerializeField] private Transform jumpEndPoint;
     [SerializeField] private Transform startPoint;
     [SerializeField] private Transform drownLine;
     [SerializeField] private GameObject customerPrefab;
@@ -20,13 +21,14 @@ public class GameInstaller : MonoInstaller
     private void BindBubblePrefab()
     {
         Container.Bind<Transform>().WithId("EmergePoint").FromInstance(emergePoint);
-        Container.Bind<Bubble>().FromComponentInNewPrefab(bubblePrefab).AsSingle();
+        Container.Bind<Bubble>().FromComponentInNewPrefab(bubblePrefab).AsTransient();
         Container.Bind<GameObject>().WithId("BubblePrefab").FromInstance(bubblePrefab);
     }
 
     private void BindCustomerPrefab()
     {
         Container.Bind<Transform>().WithId("JumpPoint").FromInstance(jumpPoint);
+        Container.Bind<Transform>().WithId("JumpEndPoint").FromInstance(jumpEndPoint);
         Container.Bind<Transform>().WithId("StartPoint").FromInstance(startPoint);
         Container.Bind<Transform>().WithId("DrownLine").FromInstance(drownLine);
 
