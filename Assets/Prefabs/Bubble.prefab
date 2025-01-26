@@ -75,7 +75,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 2
+  m_SortingOrder: 20
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
   m_Color: {r: 0.98039216, g: 0.98039216, b: 0.98039216, a: 1}
   m_FlipX: 0
@@ -166,7 +166,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 19
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
   m_Color: {r: 0.569778, g: 0.737664, b: 0.97900003, a: 1}
   m_FlipX: 0
@@ -253,10 +253,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92ba1c4d7d6658240852e6c39881e8f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  airAmount: 30
+  airAmount: 40
   scale: 0.7
   scaleDuration: 0.5
   speed: 5
+  lifeTime: 8
   waterLineLayer:
     serializedVersion: 2
     m_Bits: 64
