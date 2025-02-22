@@ -3,4 +3,4 @@
 Visitors jump into the water, and your task is to provide them with air bubbles in time.
 Keep an eye on the oxygen level and don't let them drown!
 
-You can try Bubble Beach by yourself on itch.io: [**Bubble Beach[**]()](https://solid-black.itch.io/the-bubble-beach)
+You can try Bubble Beach by yourself on itch.io: [**Bubble Beach**](https://solid-black.itch.io/the-bubble-beach)
